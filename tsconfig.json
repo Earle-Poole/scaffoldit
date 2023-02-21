@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": ["./node_modules/@types"],
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true
+  },
+  "exclude": ["dist", "node_modules"],
+  "ts-node": { "esm": true },
+  "include": ["./db/**/*", "./src/**/*", "**/*.ts", "**/*.tsx"]
+}

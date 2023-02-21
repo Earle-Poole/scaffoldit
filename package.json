@@ -1,0 +1,24 @@
+{
+  "name": "scaffolding",
+  "version": "1.0.0",
+  "main": "./dist/index",
+  "types": "./dist/index",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "typescript": "5.0.0-beta"
+  },
+  "scripts": {
+    "prepublish": "tsc-esm",
+    "test-ts": "ts-node --experimental-specifier-resolution=node index.ts src/components/organisms Accordion",
+    "test-js": "ts-node --experimental-specifier-resolution=node index.ts src/components/atoms Button -nts"
+  },
+  "devDependencies": {
+    "@digitak/tsc-esm": "^3.1.4",
+    "@types/node": "^18.14.0",
+    "ts-node": "^10.9.1"
+  },
+  "bin": {
+    "scaffolding": "./dist/index.js"
+  }
+}
