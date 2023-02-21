@@ -5,13 +5,13 @@
 For npm:
 
 ```
-npm run scaffold <destination-path> <component-name>
+npm run scaffoldit <destination-path> <component-name>
 ```
 
 For yarn:
 
 ```
-yarn run scaffold <destination-path> <component-name>
+yarn run scaffoldit <destination-path> <component-name>
 ```
 
 <br/>
@@ -19,7 +19,7 @@ yarn run scaffold <destination-path> <component-name>
 ## Examples
 
 ```
-npm run scaffold src\components\atoms Input
+npm run scaffoldit src\components\atoms Input
 ```
 
 This command will perform the following:
