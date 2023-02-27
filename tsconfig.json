@@ -16,5 +16,5 @@
   },
   "exclude": ["dist", "node_modules"],
   "ts-node": { "esm": true },
-  "include": ["./db/**/*", "./src/**/*", "**/*.ts", "**/*.tsx"]
+  "include": ["./db/**/*", "./src/**/*", "**/*.ts", "**/*.tsx"],
 }

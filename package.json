@@ -1,5 +1,5 @@
 {
-  "name": "scaffolding",
+  "name": "scaffoldit",
   "version": "1.0.0",
   "main": "./dist/index",
   "types": "./dist/index",
@@ -11,7 +11,8 @@
   "scripts": {
     "prepublish": "tsc-esm",
     "test-ts": "ts-node --experimental-specifier-resolution=node index.ts src/components/organisms Accordion",
-    "test-js": "ts-node --experimental-specifier-resolution=node index.ts src/components/atoms Button -nts"
+    "test-js": "ts-node --experimental-specifier-resolution=node index.ts src/components/atoms Button -nts",
+    "scaffoldit": "ts-node --experimental-specifier-resolution=node index.ts"
   },
   "devDependencies": {
     "@digitak/tsc-esm": "^3.1.4",
@@ -19,6 +20,6 @@
     "ts-node": "^10.9.1"
   },
   "bin": {
-    "scaffolding": "./dist/index.js"
+    "scaffoldit": "./dist/index.js"
   }
 }
