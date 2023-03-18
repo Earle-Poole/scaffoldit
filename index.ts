@@ -46,51 +46,92 @@ const main = async () => {
     fs.mkdirSync(rootPath, { recursive: true })
   }
 
-  // If the `noEntry` option is not set, write the component entry file to the rootPath directory
-  if (!options.noEntry) {
-    const entryFilePath = `${rootPath}/index.${extensions.js}`
+  if (customTemplatesConfig.defaultTemplatesEnabled) {
+    // Write the main component file to the rootPath directory
+    const componentFilePath = `${rootPath}/${formattedComponentName}.${extensions.jsx}`
     await conditionallyWriteFile(
-      entryFilePath,
-      entry(formattedComponentName),
+      componentFilePath,
+      component(formattedComponentName),
       options.forceOverwrite
     )
+
+    // If the `noEntry` option is not set, write the component entry file to the rootPath directory
+    if (!options.noEntry) {
+      const entryFilePath = `${rootPath}/index.${extensions.js}`
+      await conditionallyWriteFile(
+        entryFilePath,
+        entry(formattedComponentName),
+        options.forceOverwrite
+      )
+    }
+
+    // If the `noTypescript` option is not set, write the TypeScript types file to the rootPath directory
+    if (!options.noTypescript) {
+      const typesFilePath = `${rootPath}/${formattedComponentName}.types.${extensions.js}`
+      await conditionallyWriteFile(
+        typesFilePath,
+        types(formattedComponentName),
+        options.forceOverwrite
+      )
+    }
+
+    // If the `noStories` option is not set, write the component story file to the rootPath directory
+    if (!options.noStories) {
+      const storyFilePath = `${rootPath}/${formattedComponentName}.stories.${extensions.jsx}`
+      await conditionallyWriteFile(
+        storyFilePath,
+        story(formattedDestination, formattedComponentName),
+        options.forceOverwrite
+      )
+    }
+
+    // If the `noTests` option is not set, write the component test file to the rootPath directory
+    if (!options.noTests) {
+      const testsFilePath = `${rootPath}/${formattedComponentName}.test.${extensions.jsx}`
+      await conditionallyWriteFile(
+        testsFilePath,
+        tests(formattedComponentName),
+        options.forceOverwrite
+      )
+    }
   }
 
-  // Write the main component file to the rootPath directory
-  const componentFilePath = `${rootPath}/${formattedComponentName}.${extensions.jsx}`
-  await conditionallyWriteFile(
-    componentFilePath,
-    component(formattedComponentName),
-    options.forceOverwrite
-  )
+  if (customTemplatesConfig.enabled) {
+    if (!fs.existsSync(customTemplatesConfig.path)) {
+      console.log(
+        "Custom templates directory does not exist. Please run `scaffoldit init` to reconfigure the directory path."
+      )
+      process.exit()
+    }
 
-  // If the `noTypescript` option is not set, write the TypeScript types file to the rootPath directory
-  if (!options.noTypescript) {
-    const typesFilePath = `${rootPath}/${formattedComponentName}.types.${extensions.js}`
-    await conditionallyWriteFile(
-      typesFilePath,
-      types(formattedComponentName),
-      options.forceOverwrite
+    console.log(
+      "customTemplatesConfig.templates: ",
+      customTemplatesConfig.templates
     )
-  }
+    // If the `customTemplates` option is enabled, import the custom templates
+    const importedCustomTemplatesResponse = await Promise.all(
+      customTemplatesConfig.templates.map((template) => {
+        const templateFilePath = `${customTemplatesConfig.path}/${template[0]}.${template[1]}`
 
-  // If the `noStories` option is not set, write the component story file to the rootPath directory
-  if (!options.noStories) {
-    const storyFilePath = `${rootPath}/${formattedComponentName}.stories.${extensions.jsx}`
-    await conditionallyWriteFile(
-      storyFilePath,
-      story(formattedDestination, formattedComponentName),
-      options.forceOverwrite
+        return import("./" + templateFilePath)
+      })
     )
-  }
 
-  // If the `noTests` option is not set, write the component test file to the rootPath directory
-  if (!options.noTests) {
-    const testsFilePath = `${rootPath}/${formattedComponentName}.test.${extensions.jsx}`
-    await conditionallyWriteFile(
-      testsFilePath,
-      tests(formattedComponentName),
-      options.forceOverwrite
+    // Write the custom templates to the rootPath directory
+    const responseFromWritingCustomTemplates = await Promise.all(
+      importedCustomTemplatesResponse.map((customTemplate) => {
+        const templateFilePath = `${rootPath}/${formattedComponentName}.${extensions.jsx}`
+        return conditionallyWriteFile(
+          templateFilePath,
+          customTemplate.default(formattedComponentName),
+          options.forceOverwrite
+        )
+      })
+    )
+
+    console.log(
+      "responseFromWritingCustomTemplates: ",
+      responseFromWritingCustomTemplates
     )
   }
 

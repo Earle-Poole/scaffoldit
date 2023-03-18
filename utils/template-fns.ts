@@ -17,13 +17,12 @@ export const init = async (
 ) => {
   console.log("Initializing scaffoldit config...")
 
-  // Iterate through each option and prompt the user to enable or disable it
   const optionsKeyArray = Object.keys(options) as Options[]
   for (let i = 0; i < optionsKeyArray.length; i++) {
     const option = optionsKeyArray[i]
     const query = `Would you like to enable the ${option} option? (y/N)  `
     const flag = await promptUserForBoolean(query, false)
-    // If the option is not the `init` option, update the `options` object with the user's response
+    // Skip the init Option
     if (option !== Options.init) {
       options[option] = flag
     }
@@ -42,6 +41,5 @@ export const init = async (
     options.forceOverwrite
   )
 
-  // Exit the process
   process.exit()
 }

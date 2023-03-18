@@ -7,7 +7,11 @@ export default {
   customTemplates: {
     enabled: true,
     path: "scaffolding",
-    templates: ["test"],
-    defaultTemplatesEnabled: true
+    templates: [
+      // [template filename, file extension]
+      ["tests", "ts"],
+      ["story", "ts"],
+    ],
+    defaultTemplatesEnabled: false,
   },
 }
