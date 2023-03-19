@@ -1,3 +1,6 @@
+import { extensions } from "./../index"
+import { CustomTemplatesConfig } from "./../templates/config"
+import { defaultCustomTemplateConfig } from "./constants"
 import readline from "readline"
 import fs from "fs"
 
@@ -54,12 +57,9 @@ export const promptUserForBoolean = async (
   return response.toLowerCase() === "y"
 }
 
-export const promptUserForCustomTemplates = async (customTemplateConfig: {
-  enabled: boolean
-  path: string
-  templates: string[][]
-  defaultTemplatesEnabled: boolean
-}) => {
+export const promptUserForCustomTemplates = async (
+  customTemplateConfig: CustomTemplatesConfig
+) => {
   const useCustomTemplates = await promptUser(
     "Would you like to use custom templates? (y/N)  "
   )
@@ -72,16 +72,42 @@ export const promptUserForCustomTemplates = async (customTemplateConfig: {
     )
     const templates = await promptUser("Templates to use: ")
     customTemplateConfig.templates = templates
-      .split(/\W{1,}/g)
+      .split(/\W{1,}\W(?!@)/g)
       .map((t) => t.split("@"))
+
+    const nonExistentTemplates = []
+    console.log("Checking for your templates at your specified path:")
+    for (let [templateName] of customTemplateConfig.templates) {
+      const filePath = `${customTemplateConfig.path}/${templateName}.${extensions.js}`
+      if (fs.existsSync(filePath)) {
+        console.log(`  ${filePath} -> EXISTS`)
+      } else {
+        console.log(`  ${filePath} -> DOES NOT EXIST`)
+        nonExistentTemplates.push(filePath)
+      }
+    }
+
+    if (nonExistentTemplates.length > 0) {
+      console.log(
+        "The following templates do not exist at your specified path:"
+      )
+      for (let template of nonExistentTemplates) {
+        console.log(`  ${template}`)
+      }
+      console.log(
+        "Please make sure the templates exist at your specified path before continuing."
+      )
+      process.exit()
+    }
 
     const useDefaultTemplates = await promptUser(
       "Would you like to continue using the default templates? (y/N)  "
     )
 
     // If default templates are confirmed, update customTemplateConfig accordingly
-    if (useDefaultTemplates.toLowerCase() === "y") {
-      customTemplateConfig.defaultTemplatesEnabled = true
-    }
+    customTemplateConfig.defaultTemplatesEnabled =
+      useDefaultTemplates.toLowerCase() === "y"
+  } else {
+    Object.assign(customTemplateConfig, defaultCustomTemplateConfig)
   }
 }

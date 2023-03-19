@@ -1,5 +1,5 @@
 import { useTypescript } from "../index"
-export default (destination: string, name: string) => {
+export default (name: string, destination: string) => {
   let string = ""
 
   if (useTypescript) {

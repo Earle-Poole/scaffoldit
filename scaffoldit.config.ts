@@ -1,3 +1,5 @@
+import { ScaffolditConfig } from "./global.d"
+
 export default {
   forceOverwrite: false,
   noEntry: false,
@@ -5,13 +7,9 @@ export default {
   noTests: false,
   noTypescript: false,
   customTemplates: {
-    enabled: true,
-    path: "scaffolding",
-    templates: [
-      // [template filename, file extension]
-      ["tests", "ts"],
-      ["story", "ts"],
-    ],
-    defaultTemplatesEnabled: false,
+    enabled: false,
+    path: "",
+    templates: [],
+    defaultTemplatesEnabled: true,
   },
-}
+} as ScaffolditConfig

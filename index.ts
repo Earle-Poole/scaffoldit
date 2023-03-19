@@ -20,19 +20,21 @@ const { customTemplates: customTemplatesConfig, ...configObj } =
   scaffolditConfig
 const options = { ...configObj, ...parseArgsForOptions(nodeArgs) }
 
+if (!destination) {
+  console.log(
+    'Please specify a destination for the component. e.g. "yarn run scaffoldit <destination> <componentName>"'
+  )
+  process.exit(9)
+}
+
 // Format the component destination and name, and determine whether TypeScript is being used
 const formattedDestination = destination.replace(/\\/g, "/")
 const formattedComponentName = componentName
   ? componentName[0].toUpperCase() + componentName.slice(1)
   : ""
-export const useTypescript = !options.noTypescript
 
 // Define the root path for the component and the file extensions to use for the component, based on whether TypeScript is being used
 const rootPath = `${formattedDestination}/${formattedComponentName}`
-const extensions = {
-  jsx: useTypescript ? "tsx" : "jsx",
-  js: useTypescript ? "ts" : "js",
-}
 
 const main = async () => {
   // If the `init` option is set, remove it from the options object before callling the `init` function
@@ -80,7 +82,7 @@ const main = async () => {
       const storyFilePath = `${rootPath}/${formattedComponentName}.stories.${extensions.jsx}`
       await conditionallyWriteFile(
         storyFilePath,
-        story(formattedDestination, formattedComponentName),
+        story(formattedComponentName, formattedDestination),
         options.forceOverwrite
       )
     }
@@ -111,7 +113,7 @@ const main = async () => {
     // If the `customTemplates` option is enabled, import the custom templates
     const importedCustomTemplatesResponse = await Promise.all(
       customTemplatesConfig.templates.map((template) => {
-        const templateFilePath = `${customTemplatesConfig.path}/${template[0]}.${template[1]}`
+        const templateFilePath = `${customTemplatesConfig.path}/${template[0]}.${extensions.js}`
 
         return import("./" + templateFilePath)
       })
@@ -119,8 +121,9 @@ const main = async () => {
 
     // Write the custom templates to the rootPath directory
     const responseFromWritingCustomTemplates = await Promise.all(
-      importedCustomTemplatesResponse.map((customTemplate) => {
-        const templateFilePath = `${rootPath}/${formattedComponentName}.${extensions.jsx}`
+      importedCustomTemplatesResponse.map((customTemplate, idx) => {
+        const templateFileExtension = customTemplatesConfig.templates[idx][1]
+        const templateFilePath = `${rootPath}/${formattedComponentName}.${templateFileExtension}`
         return conditionallyWriteFile(
           templateFilePath,
           customTemplate.default(formattedComponentName),
@@ -135,8 +138,14 @@ const main = async () => {
     )
   }
 
-  // Exit the process
-  process.exit()
+  process.exit(0)
+}
+
+export const useTypescript = !options.noTypescript
+
+export const extensions = {
+  jsx: useTypescript ? "tsx" : "jsx",
+  js: useTypescript ? "ts" : "js",
 }
 
 main()

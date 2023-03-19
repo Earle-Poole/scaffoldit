@@ -1,7 +1,7 @@
 export interface CustomTemplatesConfig {
   enabled: boolean
   path: string
-  templates: string[]
+  templates: string[][]
   defaultTemplatesEnabled: boolean
 }
 
@@ -32,8 +32,9 @@ export default ({
   customTemplates: {
     enabled: ${customTemplates.enabled},
     path: "${customTemplates.path}",
-    templates: ${JSON.stringify(customTemplates.templates)},
+    templates: ${JSON.stringify(customTemplates.templates)}${
+  noTypescript ? "" : " as string[][]"
+}},
     defaultTemplatesEnabled: ${customTemplates.defaultTemplatesEnabled}
   },
-}
 `
