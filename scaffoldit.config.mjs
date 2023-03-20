@@ -1,6 +1,4 @@
-import { ScaffolditConfig } from "./global.d"
-
-export default {
+const scaffolditConfig = {
   forceOverwrite: false,
   noEntry: false,
   noStories: false,
@@ -12,4 +10,6 @@ export default {
     templates: [],
     defaultTemplatesEnabled: true,
   },
-} as ScaffolditConfig
+}
+
+export default scaffolditConfig

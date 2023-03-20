@@ -1,17 +1,32 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 
 console.log("Loading scaffoldit...")
 
 import fs from "fs"
-import entry from "./templates/entry.ts"
-import component from "./templates/component.ts"
-import types from "./templates/types.ts"
-import { parseArgsForOptions } from "./utils/index.ts"
-import story from "./templates/story.ts"
-import tests from "./templates/tests.ts"
-import scaffolditConfig from "./scaffoldit.config.ts"
-import { conditionallyWriteFile } from "./utils/interactions.ts"
-import { init } from "./utils/template-fns.ts"
+import { ScaffolditConfig } from "./global.d"
+import entry from "./templates/entry"
+import component from "./templates/component"
+import types from "./templates/types"
+import { parseArgsForOptions } from "./utils/index"
+import story from "./templates/story"
+import tests from "./templates/tests"
+import DEFAULT_CONFIG from "./scaffoldit.config"
+import { conditionallyWriteFile } from "./utils/interactions"
+import { init } from "./utils/template-fns"
+import path from "path"
+
+const scaffolditConfigFilePath = path.resolve(
+  process.cwd(),
+  "scaffoldit.config.mjs"
+)
+const scaffolditConfigFilePathURL = new URL(
+  `file://${scaffolditConfigFilePath}`
+).href
+const scaffolditConfig: ScaffolditConfig = fs.existsSync(
+  scaffolditConfigFilePath
+)
+  ? (await import(scaffolditConfigFilePathURL)).default
+  : DEFAULT_CONFIG
 
 // Parse command-line arguments and scaffoldit configuration to determine options and component information
 const nodeArgs = process.argv.slice(2)
@@ -69,7 +84,7 @@ const main = async () => {
 
     // If the `noTypescript` option is not set, write the TypeScript types file to the rootPath directory
     if (!options.noTypescript) {
-      const typesFilePath = `${rootPath}/${formattedComponentName}.types.${extensions.js}`
+      const typesFilePath = `${rootPath}/${formattedComponentName}.types.ts`
       await conditionallyWriteFile(
         typesFilePath,
         types(formattedComponentName),
@@ -110,12 +125,21 @@ const main = async () => {
       "customTemplatesConfig.templates: ",
       customTemplatesConfig.templates
     )
+    const templateDirectoryPath = `${process.cwd()}/${
+      customTemplatesConfig.path
+    }`
     // If the `customTemplates` option is enabled, import the custom templates
     const importedCustomTemplatesResponse = await Promise.all(
       customTemplatesConfig.templates.map((template) => {
-        const templateFilePath = `${customTemplatesConfig.path}/${template[0]}.${extensions.js}`
+        const templateFileName = `${template[0]}.mjs`
+        const templateFilePath = path.resolve(
+          templateDirectoryPath,
+          templateFileName
+        )
 
-        return import("./" + templateFilePath)
+        const templateFilePathURL = new URL(`file://${templateFilePath}`).href
+
+        return import(templateFilePathURL)
       })
     )
 

@@ -1,4 +1,5 @@
 import { useTypescript } from "../index"
+
 export default (name: string) => {
   const propsName = `${name}Props`
   let string = ""

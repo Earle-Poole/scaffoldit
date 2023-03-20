@@ -34,7 +34,7 @@ export const init = async (
   console.log("customTemplatesConfig: ", customTemplatesConfig)
 
   // Write the scaffoldit configuration to disk
-  const configFileName = "scaffoldit.config.ts"
+  const configFileName = "scaffoldit.config.mjs"
   await conditionallyWriteFile(
     configFileName,
     config({ ...options, customTemplates: customTemplatesConfig }),

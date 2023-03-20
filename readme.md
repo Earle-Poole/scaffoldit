@@ -35,7 +35,7 @@ This command will perform the following:
 
 ## Config File
 
-You can create your own templates and use them with Scaffoldit. To do so, you need to create a `scaffoldit.config.js` file in the root of your project. You can create this file manually, or you can use the `-i, --init` flag to create it for you.
+You can create your own templates and use them with Scaffoldit. To do so, you need to create a `scaffoldit.config.mjs` file in the root of your project. You can create this file manually, or you can use the `-i, --init` flag to create it for you.
 
 ```
 npm run scaffoldit --init
@@ -43,7 +43,7 @@ npm run scaffoldit --init
 npm run scaffoldit -i
 ```
 
-This is an example of a `scaffoldit.config.js` file:
+This is an example of a `scaffoldit.config.mjs` file:
 
 ```js
 export default {
@@ -74,10 +74,10 @@ Example:
 
 The example above will establish a filename for a template to look for and an output extension mapping in the following way:
 
-- `component.ts`-> `<ComponentName>.tsx`
-- `story.ts` -> `<ComponentName>.stories.tsx`
-- `tests.ts` -> `<ComponentName>.test.tsx`
-- `types.ts` -> `<ComponentName>.types.ts`
+- `component.mjs`-> `<ComponentName>.tsx`
+- `story.mjs` -> `<ComponentName>.stories.tsx`
+- `tests.mjs` -> `<ComponentName>.test.tsx`
+- `types.mjs` -> `<ComponentName>.types.ts`
 
 ## Arguments
 
