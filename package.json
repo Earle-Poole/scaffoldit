@@ -1,6 +1,6 @@
 {
   "name": "@earle-poole/scaffoldit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/index",
   "types": "./dist/index",
   "description": "Scaffoldit is a CLI tool to scaffold React components and pages",
@@ -22,5 +22,9 @@
   },
   "bin": {
     "scaffoldit": "./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
