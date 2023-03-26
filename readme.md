@@ -54,8 +54,9 @@ src/
     └── atoms/
         └── Input/
             ├── index.ts
-            ├── Input.tsx
             ├── Input.stories.tsx
+            ├── Input.tsx
+            ├── Input.test.tsx
             └── Input.types.ts
 ```
 
@@ -68,7 +69,7 @@ You can create your own templates and use them with Scaffoldit. To do so, you ne
 ```
 $ npm run scaffoldit --init
 
-// or
+# or
 
 $ npm run scaffoldit -i
 ```
@@ -91,15 +92,46 @@ export default {
 }
 ```
 
-## Custom Templates
+## Default Templates
+
+When running Scaffoldit without a config file, it will use the default templates. These templates are located in the `templates` folder of the package. The default templates are as follows:
+
+- `component.ts` -> `<ComponentName>.tsx`
+- `story.ts` -> `<ComponentName>.stories.tsx`
+- `tests.ts` -> `<ComponentName>.test.tsx`
+- `types.ts` -> `<ComponentName>.types.ts`
+- `entry.ts` -> `index.ts`
+
+Default templates will be used until they are explicitly disabled when enabling custom templates.
+
+## Making a Custom Template
+
+To make a custom template, you need to create a `.mjs` file in the `templates` folder of your project. The filename of the template should be the same as the name of the template you want to use. For example, if you want to use a custom template for the `component` template, you need to create a file named `component.mjs` in the `templates` folder.
+
+The template file should export a function that returns a template literal. The function will receive the provided `component-name` as an argument. The template literal should contain the template for the file you want to create.
+
+Example template file:
+
+```js
+export default (componentName) => `export const ${componentName} = () => {
+    return <div>${componentName}</div>;
+  };
+`
+```
+
+## Using Custom Templates
 
 During the initialization of the config file, you will be asked if you want to use custom templates. If you choose to do so, you will be asked to provide the `path` to your custom templates. The path should be relative to the root of your project. Next you will be prompted to provide the `templates` you want to use. The templates should be provided in the following format:
 
-```cmd
+```txt
 <template-filename>@<output-extension>
-Example:
-- Templates to use:
-- "component@tsx, story@stories.tsx, tests@test.tsx, types@types.ts"
+```
+
+Example prompt during `init` process:
+
+```cmd
+$ Templates to use:
+$ component@tsx, story@stories.tsx, tests@test.tsx, types@types.ts
 ```
 
 The example above will establish a filename for a template to look for and an output extension mapping in the following way:
@@ -109,18 +141,20 @@ The example above will establish a filename for a template to look for and an ou
 - `tests.mjs` -> `<ComponentName>.test.tsx`
 - `types.mjs` -> `<ComponentName>.types.ts`
 
+_**Note:** If your custom templates are named identically to the default templates, they will override the default templates, if default templates are enabled._
+
 ## Arguments
 
-| Name/Flag               | Description                                                         | Values                           |
-| ----------------------- | ------------------------------------------------------------------- | -------------------------------- |
-| `destination-path`      | <b>First arg:</b> The path where the new component will be created. | A valid file path.               |
-| `component-name`        | <b>Second arg:</b> The name of the component to be created.         | A valid string.                  |
-| `-i, --init`            | Initialize a config file.                                           | `true`, <strong>`false`</strong> |
-| `-f, --force`           | Forces overwriting of existing files.                               | `true`, <strong>`false`</strong> |
-| `-nt, --no-tests`       | Exclude tests from the generated files.                             | `true`, <strong>`false`</strong> |
-| `-nts, --no-typescript` | Exclude TypeScript from the generated files.                        | `true`, <strong>`false`</strong> |
-| `-ns, --no-stories`     | Exclude the creation of storybook files.                            | `true`, <strong>`false`</strong> |
-| `-ne, --no-entry`       | Exclude the creation of an `index.ts` file.                         | `true`, <strong>`false`</strong> |
+| Name/Flag               | Description                                                         | Values              |
+| ----------------------- | ------------------------------------------------------------------- | ------------------- |
+| `destination-path`      | <b>First arg:</b> The path where the new component will be created. | A valid file path.  |
+| `component-name`        | <b>Second arg:</b> The name of the component to be created.         | A valid string.     |
+| `-i, --init`            | Initialize a config file.                                           | `true`, **`false`** |
+| `-f, --force`           | Forces overwriting of existing files.                               | `true`, **`false`** |
+| `-nt, --no-tests`       | Exclude tests from the generated files.                             | `true`, **`false`** |
+| `-nts, --no-typescript` | Exclude TypeScript from the generated files.                        | `true`, **`false`** |
+| `-ns, --no-stories`     | Exclude the creation of storybook files.                            | `true`, **`false`** |
+| `-ne, --no-entry`       | Exclude the creation of an `index.ts` file.                         | `true`, **`false`** |
 
 ## Future Features
 

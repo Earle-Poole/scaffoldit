@@ -71,8 +71,9 @@ export const promptUserForCustomTemplates = async (
       "Path to directory of templates: "
     )
     const templates = await promptUser("Templates to use: ")
+    const delimiterRegex = /\W{1,}\W(?!@)/g
     customTemplateConfig.templates = templates
-      .split(/\W{1,}\W(?!@)/g)
+      .split(delimiterRegex)
       .map((t) => t.split("@"))
 
     const nonExistentTemplates = []
