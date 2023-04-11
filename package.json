@@ -1,6 +1,6 @@
 {
   "name": "@earle-poole/scaffoldit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./dist/index",
   "types": "./dist/index",
   "description": "Scaffoldit is a CLI tool to scaffold React components and pages",

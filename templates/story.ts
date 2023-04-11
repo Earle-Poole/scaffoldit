@@ -8,8 +8,10 @@ export default (name: string, destination: string) => {
 
   string += `import ${name} from './${name}'
 
+const args${useTypescript ? `: ${name}Props` : ""} = {}
+
 const MetaData = {
-  args: {},
+  args,
   component: ${name},
   title: '${destination.split("/").at(-1)}/${name}',
 }${useTypescript ? " as Meta" : ""}
