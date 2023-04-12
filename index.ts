@@ -13,7 +13,7 @@ import DEFAULT_CONFIG from "./scaffoldit.config.js"
 import { conditionallyWriteFile } from "./utils/interactions.js"
 import { init } from "./utils/template-fns.js"
 import path from "path"
-import { ScaffolditConfig } from "./scaffoldit.config.js"
+import { ScaffolditConfig } from "./scaffoldit.js"
 
 const scaffolditConfigFilePath = path.resolve(
   process.cwd(),

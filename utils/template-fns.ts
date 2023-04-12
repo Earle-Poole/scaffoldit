@@ -1,3 +1,4 @@
+import path from "path"
 import config, { Options } from "../templates/config.js"
 import {
   conditionallyWriteFile,
@@ -36,7 +37,7 @@ export const init = async (
   // Write the scaffoldit configuration to disk
   const configFileName = "scaffoldit.config.js"
   await conditionallyWriteFile(
-    configFileName,
+    path.resolve(__dirname, configFileName),
     config({ ...options, customTemplates: customTemplatesConfig }),
     options.forceOverwrite
   )

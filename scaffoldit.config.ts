@@ -7,7 +7,7 @@ const scaffolditConfig = {
   customTemplates: {
     enabled: false,
     path: "",
-    templates: [],
+    templates: [] as string[][],
     defaultTemplatesEnabled: true,
   },
 }
