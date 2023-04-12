@@ -64,7 +64,7 @@ src/
 
 ## Config File
 
-You can create your own templates and use them with Scaffoldit. To do so, you need to create a `scaffoldit.config.mjs` file in the root of your project. You can create this file manually, or you can use the `-i, --init` flag to create it for you.
+You can create your own templates and use them with Scaffoldit. To do so, you need to create a `scaffoldit.config.js` file in the root of your project. You can create this file manually, or you can use the `-i, --init` flag to create it for you.
 
 ```
 $ npm run scaffoldit --init
@@ -74,7 +74,7 @@ $ npm run scaffoldit --init
 $ npm run scaffoldit -i
 ```
 
-This is an example of a `scaffoldit.config.mjs` file:
+This is an example of a `scaffoldit.config.js` file:
 
 ```js
 export default {

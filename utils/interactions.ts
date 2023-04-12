@@ -1,6 +1,6 @@
-import { extensions } from "./../index"
-import { CustomTemplatesConfig } from "./../templates/config"
-import { defaultCustomTemplateConfig } from "./constants"
+import { extensions } from "../index.js"
+import { CustomTemplatesConfig } from "./../templates/config.js"
+import { defaultCustomTemplateConfig } from "./constants.js"
 import readline from "readline"
 import fs from "fs"
 

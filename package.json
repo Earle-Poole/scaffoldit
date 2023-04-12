@@ -1,6 +1,6 @@
 {
   "name": "@earle-poole/scaffoldit",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "main": "./dist/index",
   "types": "./dist/index",
   "description": "Scaffoldit is a CLI tool to scaffold React components and pages",
@@ -10,13 +10,12 @@
     "typescript": "5.0.2"
   },
   "scripts": {
-    "prepublish": "tsc-esm",
+    "prepublish": "tsc",
     "test-ts": "ts-node --experimental-specifier-resolution=node index.ts src/components/organisms Accordion",
     "test-js": "ts-node --experimental-specifier-resolution=node index.ts src/components/atoms Button -nts",
     "scaffoldit": "ts-node --experimental-specifier-resolution=node index.ts"
   },
   "devDependencies": {
-    "@digitak/tsc-esm": "^3.1.4",
     "@types/node": "^18.14.0",
     "ts-node": "^10.9.1"
   },

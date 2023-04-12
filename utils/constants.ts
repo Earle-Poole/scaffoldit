@@ -1,4 +1,4 @@
-import { CustomTemplatesConfig } from "../templates/config"
+import { CustomTemplatesConfig } from "../templates/config.js"
 
 export const defaultCustomTemplateConfig: CustomTemplatesConfig = {
   enabled: false,

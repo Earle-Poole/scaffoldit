@@ -1,4 +1,4 @@
-import { useTypescript } from "../index"
+import { useTypescript } from "../index.js"
 export default (name: string, destination: string) => {
   let string = ""
 

@@ -3,21 +3,21 @@
 console.log("Loading scaffoldit...")
 
 import fs from "fs"
-import { ScaffolditConfig } from "./global.d"
-import entry from "./templates/entry"
-import component from "./templates/component"
-import types from "./templates/types"
-import { parseArgsForOptions } from "./utils/index"
-import story from "./templates/story"
-import tests from "./templates/tests"
-import DEFAULT_CONFIG from "./scaffoldit.config"
-import { conditionallyWriteFile } from "./utils/interactions"
-import { init } from "./utils/template-fns"
+import entry from "./templates/entry.js"
+import component from "./templates/component.js"
+import types from "./templates/types.js"
+import { parseArgsForOptions } from "./utils/index.js"
+import story from "./templates/story.js"
+import tests from "./templates/tests.js"
+import DEFAULT_CONFIG from "./scaffoldit.config.js"
+import { conditionallyWriteFile } from "./utils/interactions.js"
+import { init } from "./utils/template-fns.js"
 import path from "path"
+import { ScaffolditConfig } from "./scaffoldit.config.js"
 
 const scaffolditConfigFilePath = path.resolve(
   process.cwd(),
-  "scaffoldit.config.mjs"
+  "scaffoldit.config.js"
 )
 const scaffolditConfigFilePathURL = new URL(
   `file://${scaffolditConfigFilePath}`

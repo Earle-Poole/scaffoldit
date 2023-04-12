@@ -1,4 +1,4 @@
-import { Options } from "../templates/config"
+import { Options } from "../templates/config.js"
 
 // Logs an error if one is passed in
 export const handleError = (error: Error | null) => {

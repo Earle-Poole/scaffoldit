@@ -1,9 +1,9 @@
-import config, { Options } from "../templates/config"
+import config, { Options } from "../templates/config.js"
 import {
   conditionallyWriteFile,
   promptUserForBoolean,
   promptUserForCustomTemplates,
-} from "./interactions"
+} from "./interactions.js"
 
 // A function that initializes the scaffoldit configuration based on user input
 export const init = async (
@@ -34,7 +34,7 @@ export const init = async (
   console.log("customTemplatesConfig: ", customTemplatesConfig)
 
   // Write the scaffoldit configuration to disk
-  const configFileName = "scaffoldit.config.mjs"
+  const configFileName = "scaffoldit.config.js"
   await conditionallyWriteFile(
     configFileName,
     config({ ...options, customTemplates: customTemplatesConfig }),
