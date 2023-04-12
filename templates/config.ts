@@ -23,7 +23,7 @@ export default ({
   customTemplates,
 }: Omit<Record<Options, boolean>, Options.init> & {
   customTemplates: CustomTemplatesConfig
-}) => `const scaffolditConfig = {
+}) => `module.exports = {
   forceOverwrite: ${forceOverwrite},
   noEntry: ${noEntry},
   noStories: ${noStories},
@@ -31,11 +31,9 @@ export default ({
   noTypescript: ${noTypescript},
   customTemplates: {
     enabled: ${customTemplates.enabled},
-    path: "${customTemplates.path}",
+    path: '${customTemplates.path}',
     templates: ${JSON.stringify(customTemplates.templates)},
     defaultTemplatesEnabled: ${customTemplates.defaultTemplatesEnabled},
   },
 }
-
-export default scaffolditConfig
 `

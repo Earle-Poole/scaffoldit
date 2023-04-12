@@ -5,6 +5,7 @@ import {
   promptUserForBoolean,
   promptUserForCustomTemplates,
 } from "./interactions.js"
+import { appConfigFilePath } from "../index.js"
 
 // A function that initializes the scaffoldit configuration based on user input
 export const init = async (
@@ -37,7 +38,7 @@ export const init = async (
   // Write the scaffoldit configuration to disk
   const configFileName = "scaffoldit.config.js"
   await conditionallyWriteFile(
-    path.resolve(__dirname, configFileName),
+    appConfigFilePath,
     config({ ...options, customTemplates: customTemplatesConfig }),
     options.forceOverwrite
   )

@@ -14,11 +14,22 @@ import { conditionallyWriteFile } from "./utils/interactions.js"
 import { init } from "./utils/template-fns.js"
 import path from "path"
 import { ScaffolditConfig } from "./scaffoldit.js"
+import { fileURLToPath } from 'url';
 
-const scaffolditConfigFilePath = path.resolve(
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+export const defaultConfigFilePath = path.resolve(
+  __dirname,
+  "scaffoldit.config.js"
+)
+export const appConfigFilePath = path.resolve(
   process.cwd(),
   "scaffoldit.config.js"
 )
+
+export const scaffolditConfigFilePath = fs.existsSync(appConfigFilePath) ? appConfigFilePath : defaultConfigFilePath
+
+console.log('scaffolditConfigFilePath: ', scaffolditConfigFilePath)
 const scaffolditConfigFilePathURL = new URL(
   `file://${scaffolditConfigFilePath}`
 ).href
