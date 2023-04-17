@@ -62,6 +62,16 @@ src/
 
 <br/>
 
+## Demo
+Local install:
+![916C92F9-6B84-4588-953A-616001DA5BF0](https://user-images.githubusercontent.com/44408506/232561882-bbd61311-9bf6-4ec1-93fe-68745c4c1ec7.gif)
+
+Global install:
+![6683229F-B8D1-4CBA-B294-572DD38E5085](https://user-images.githubusercontent.com/44408506/232561893-a1fa9343-b025-443b-986e-6395d52a2932.gif)
+
+
+<br/>
+
 ## Config File
 
 You can create your own templates and use them with Scaffoldit. To do so, you need to create a `scaffoldit.config.js` file in the root of your project. You can create this file manually, or you can use the `-i, --init` flag to create it for you.
