@@ -23,9 +23,7 @@ const ${name}Component = (args:) => {
   )
 }
 const Template${useTypescript ? `: StoryObj<${name}Props>` : ""} = (args) = {
-    render: (args) => {
-      <${name} {...args} />
-    }
+    render: (args) => <${name}Component {...args} />
   }
 
 const Default: StoryObj<${name}Props> = {
