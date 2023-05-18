@@ -1,9 +1,9 @@
-import { useTypescript } from "../index.js";
+import { useTypescript } from "../index.js"
 export default (name: string, destination: string) => {
-  let string = "";
+  let string = ""
 
   if (useTypescript) {
-    string += `import { Meta, StoryObj } from '@storybook/react'\nimport { ${name}Props } from './${name}.types'\n`;
+    string += `import { Meta, StoryObj } from '@storybook/react'\nimport { ${name}Props } from './${name}.types'\n`
   }
 
   string += `import ${name} from './${name}'
@@ -36,7 +36,7 @@ const Default: StoryObj<${name}Props> = {
 export { Default }
 
 export default MetaData
-`;
+`
 
-  return string;
-};
+  return string
+}
