@@ -3,7 +3,7 @@ export default (name: string, destination: string) => {
   let string = ""
 
   if (useTypescript) {
-    string += `import { Meta, Story } from '@storybook/react/types-6-0'\nimport { ${name}Props } from './${name}.types'\n`
+    string += `import { Meta, StoryObj } from '@storybook/react'\nimport { ${name}Props } from './${name}.types'\n`
   }
 
   string += `import ${name} from './${name}'
@@ -16,10 +16,20 @@ const MetaData = {
   title: '${destination.split("/").at(-1)}/${name}',
 }${useTypescript ? " as Meta" : ""}
 
-const Template${
-    useTypescript ? `: Story<${name}Props>` : ""
-  } = (args) => <${name} {...args} />
-const Default = Template.bind({})
+
+const ${name}Component = (args:) => {
+  return (
+    <${name} {...args} />
+  )
+}
+const Template${useTypescript ? `: StoryObj<${name}Props>` : ""} = (args) = {
+    render: (args) => <${name}Component {...args} />
+  }
+
+const Default: StoryObj<${name}Props> = {
+  ...Template,
+  args: args${useTypescript ? " as ${name}Props" : ""}
+}
 
 export { Default }
 
