@@ -1,4 +1,4 @@
-import { useTypescript } from "../index.js"
+import { useTypescript } from "../constants"
 
 export default (name: string) => {
   const propsName = `${name}Props`

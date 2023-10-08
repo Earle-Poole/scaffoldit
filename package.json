@@ -1,26 +1,34 @@
 {
   "name": "@earle-poole/scaffoldit",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "main": "./dist/index",
-  "types": "./dist/index",
   "description": "Scaffoldit is a CLI tool to scaffold React components and pages",
+  "contributors": [
+    {
+      "name": "Earle Poole",
+      "email": "eepoole4@gmail.com",
+      "url": "https://github.com/Earle-Poole"
+    }
+  ],
   "license": "MIT",
   "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
   "dependencies": {
-    "typescript": "5.0.2"
+    "bun": "1.0.4"
+  },
+  "peerDependencies": {
+    "typescript": "5.2.2"
   },
   "scripts": {
-    "prepublish": "tsc",
-    "test-ts": "ts-node --experimental-specifier-resolution=node index.ts src/components/organisms Accordion",
-    "test-js": "ts-node --experimental-specifier-resolution=node index.ts src/components/atoms Button -nts",
-    "scaffoldit": "ts-node --experimental-specifier-resolution=node index.ts"
-  },
-  "devDependencies": {
-    "@types/node": "^18.14.0",
-    "ts-node": "^10.9.1"
+    "dev": "bun --watch index.ts",
+    "build": "bun build --minify index.ts --outfile=./dist/bundle.js",
+    "scaffoldit": "bun run index.ts",
+    "publish:npm": "npm publish --access public"
   },
   "bin": {
-    "scaffoldit": "./dist/index.js"
+    "scaffoldit": "./dist/bundle.js"
   },
   "publishConfig": {
     "access": "public",
@@ -31,6 +39,7 @@
     "url": "https://github.com/Earle-Poole/scaffoldit.git"
   },
   "bugs": {
-    "url": "https://github.com/Earle-Poole/scaffoldit/issues"
+    "url": "https://github.com/Earle-Poole/scaffoldit/issues",
+    "email": "eepoole4@gmail.com"
   }
 }

@@ -1,12 +1,3 @@
-import { Options } from "../templates/config.js"
-
-// Logs an error if one is passed in
-export const handleError = (error: Error | null) => {
-  if (error) {
-    console.log("error: ", error)
-  }
-}
-
 // Parses command-line arguments for options and returns an object with boolean values for each option
 export const parseArgsForOptions = (args: string[]) => {
   const options: Partial<Record<Options, boolean>> = {}
@@ -43,4 +34,13 @@ export const parseArgsForOptions = (args: string[]) => {
   })
 
   return options
+}
+
+export enum Options {
+  forceOverwrite = "forceOverwrite",
+  init = "init",
+  noEntry = "noEntry",
+  noStories = "noStories",
+  noTests = "noTests",
+  noTypescript = "noTypescript",
 }
