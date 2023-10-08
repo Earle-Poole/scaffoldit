@@ -1,8 +1,6 @@
-import { extensions } from "../index.js"
-import { CustomTemplatesConfig } from "./../templates/config.js"
-import { defaultCustomTemplateConfig } from "./constants.js"
-import readline from "readline"
-import fs from "fs"
+import readline from "node:readline"
+import { defaultCustomTemplateConfig, extensions } from "../constants"
+import { CustomTemplatesConfig } from "../types"
 
 // Readline interface for user input
 const rl = readline.createInterface({
@@ -20,7 +18,7 @@ export const promptUser = (query: string) => {
 // Writes the component to the specified file path and logs the file write to the console
 const writeFile = (filePath: string, component: string) => {
   console.log(`Writing file @ ${filePath}...`)
-  fs.writeFileSync(filePath, component, {})
+  Bun.write(filePath, component, {})
 }
 
 export const conditionallyWriteFile = async (
@@ -28,8 +26,9 @@ export const conditionallyWriteFile = async (
   component: string,
   overwrite: boolean
 ) => {
-  // If the file already exists and the user does not want to overwrite it, prompt the user to confirm overwriting
-  if (!overwrite && fs.existsSync(filePath)) {
+  // If the file already exists and the user does not want to force
+  // overwriting it, prompt the user to confirm overwriting the file
+  if (!overwrite && (await Bun.file(filePath).exists())) {
     const response = await promptUser(
       `"${filePath}" already exists. Are you sure you want to overwrite it? Y/n `
     )
@@ -80,7 +79,7 @@ export const promptUserForCustomTemplates = async (
     console.log("Checking for your templates at your specified path:")
     for (let [templateName] of customTemplateConfig.templates) {
       const filePath = `${customTemplateConfig.path}/${templateName}.${extensions.js}`
-      if (fs.existsSync(filePath)) {
+      if (await Bun.file(filePath).exists()) {
         console.log(`  ${filePath} -> EXISTS`)
       } else {
         console.log(`  ${filePath} -> DOES NOT EXIST`)
@@ -98,7 +97,7 @@ export const promptUserForCustomTemplates = async (
       console.log(
         "Please make sure the templates exist at your specified path before continuing."
       )
-      process.exit()
+      process.exit(0)
     }
 
     const useDefaultTemplates = await promptUser(
