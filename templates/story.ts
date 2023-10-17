@@ -28,7 +28,7 @@ const Template${useTypescript ? `: StoryObj<${name}Props>` : ""} = (args) = {
 
 const Default: StoryObj<${name}Props> = {
   ...Template,
-  args: args${useTypescript ? " as ${name}Props" : ""}
+  args: args${useTypescript ? ` as ${name}Props` : ""}
 }
 
 export { Default }
